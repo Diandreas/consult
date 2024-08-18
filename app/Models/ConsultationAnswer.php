@@ -11,7 +11,7 @@ class ConsultationAnswer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['description', 'consultation_request_id', 'created_by', 'updated_by'];
+    protected $fillable = ['description', 'consultation_request_id', 'created_by'];
 
     public function consultationRequest()
     {

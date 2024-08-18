@@ -61,6 +61,7 @@ class ConsultationRequestController extends Controller
 
     public function show(ConsultationRequest $consultationRequest)
     {
+        $consultationRequest->load('consultationAnswers');
         return view('consultation_requests.show', compact('consultationRequest'));
     }
 
@@ -98,5 +99,23 @@ class ConsultationRequestController extends Controller
     {
         $consultationRequest->delete();
         return redirect()->route('consultation_requests.index')->with('success', 'Consultation request deleted successfully.');
+    }
+
+    public function accept(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'accepted';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        return redirect()->back()->with('success', 'Consultation request accepted successfully.');
+    }
+
+    public function reject(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'rejected';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        return redirect()->back()->with('success', 'Consultation request rejected successfully.');
     }
 }

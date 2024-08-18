@@ -5,6 +5,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ConsultationAnswer;
+use App\Models\ConsultationRequest;
 use Illuminate\Http\Request;
 
 class ConsultationAnswerController extends Controller
@@ -15,22 +16,23 @@ class ConsultationAnswerController extends Controller
         return view('consultation_answers.index', compact('consultationAnswers'));
     }
 
-    public function create()
+    public function create(ConsultationRequest $consultationRequest)
     {
-        return view('consultation_answers.create');
+        return view('consultation_answers.create', compact('consultationRequest'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'description' => 'nullable|string',
-            'consultation_request_id' => 'required|exists:consultation_requests,id',
-        ]);
-
-        ConsultationAnswer::create($request->all());
-
-        return redirect()->route('consultation_answers.index')->with('success', 'ConsultationAnswer created successfully.');
-    }
+//    public function store(Request $request)
+//    {
+//        dd($request);
+//        $request->validate([
+//            'description' => 'nullable|string',
+//            'consultation_request_id' => 'required|exists:consultation_requests,id',
+//        ]);
+//
+//        ConsultationAnswer::create($request->all());
+//
+//        return redirect()->route('consultation_answers.index')->with('success', 'ConsultationAnswer created successfully.');
+//    }
 
     public function show(ConsultationAnswer $consultationAnswer)
     {
