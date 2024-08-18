@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/consultation-requests/{consultationRequest}/accept', [ConsultationRequestController::class, 'accept'])->name('consultation_requests.accept');
     Route::patch('/consultation-requests/{consultationRequest}/reject', [ConsultationRequestController::class, 'reject'])->name('consultation_requests.reject');
     Route::get('/consultation-answers/create/{consultationRequest}', [ConsultationAnswerController::class, 'create'])->name('consultation-answers.create');
-    Route::post('/consultation-answers', [ConsultationAnswerController::class, 'store'])->name('consultation-answers.store');
+//    Route::post('/consultation-answers', [ConsultationAnswerController::class, 'store'])->name('consultation-answers.store');
 });
 
 require __DIR__.'/auth.php';

@@ -10,7 +10,14 @@
         <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <form action="{{ route('consultation_requests.index') }}" method="GET" class="flex w-full md:w-auto">
-                    <input type="text" name="search" placeholder="Search by priority" class="flex-grow md:flex-grow-0 border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="flex-grow md:flex-grow-0 border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <select name="search_type" class="border-t border-b border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="all" {{ request('search_type') == 'all' ? 'selected' : '' }}>All</option>
+                        <option value="priority" {{ request('search_type') == 'priority' ? 'selected' : '' }}>Priority</option>
+                        <option value="status" {{ request('search_type') == 'status' ? 'selected' : '' }}>Status</option>
+                        <option value="name" {{ request('search_type') == 'name' ? 'selected' : '' }}>Name</option>
+                        <option value="description" {{ request('search_type') == 'description' ? 'selected' : '' }}>Description</option>
+                    </select>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-r transition duration-150 ease-in-out flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />

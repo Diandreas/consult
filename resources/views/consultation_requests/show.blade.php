@@ -1,4 +1,3 @@
-<!-- resources/views/consultation_requests/show.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -36,10 +35,9 @@
             </div>
         @endif
         <div class="flex justify-end mb-4">
-            <a href="{{ route('consultation-answers.create', $consultationRequest->id) }}"
-               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" data-toggle="modal" data-target="#replyModal">
                 Reply
-            </a>
+            </button>
         </div>
 
         <h2 class="text-xl font-bold mb-2">Consultation Answers</h2>
@@ -47,9 +45,87 @@
             <div class="bg-white rounded shadow p-4 border-b border-indigo-800 mb-2">
                 <p>{!! $answer->description !!}</p>
                 <p class="text-sm text-gray-600">Created at: {{ $answer->created_at }}</p>
+                <div class="flex justify-end space-x-2 mt-2">
+                    <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" data-toggle="modal" data-target="#editModal{{ $answer->id }}">Edit</button>
+                    <form action="{{ route('consultation_answers.destroy', $answer->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal{{ $answer->id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ $answer->id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel{{ $answer->id }}">Edit Answer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('consultation_answers.update', $answer->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="mb-4">
+                                    <label for="description{{ $answer->id }}" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                                    <textarea name="description" id="description{{ $answer->id }}" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter description">{{ $answer->description }}</textarea>
+                                    @error('description')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                        Update
+                                    </button>
+                                    <button type="button" class="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" data-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         @empty
             <p>No answers yet.</p>
         @endforelse
+    </div>
+
+    <!-- Reply Modal -->
+    <div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="replyModalLabel">Reply to Consultation Request</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('consultation_answers.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="consultation_request_id" value="{{ $consultationRequest->id }}">
+                        <div class="mb-4">
+                            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                            <textarea name="description" id="description" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter description">{{ old('description') }}</textarea>
+                            @error('description')
+                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button type="submit" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Create
+                            </button>
+                            <button type="button" class="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

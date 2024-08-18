@@ -1,65 +1,68 @@
 <?php
 
-// app/Http/Controllers/ConsultationAnswerController.php
-
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\ConsultationAnswer;
 use App\Models\ConsultationRequest;
-use Illuminate\Http\Request;
 
 class ConsultationAnswerController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $consultationAnswers = ConsultationAnswer::all();
+        $search = $request->input('search');
+        $consultationAnswers = ConsultationAnswer::with('consultationRequest')
+            ->where('description', 'like', "%$search%")
+            ->paginate(10);
+
         return view('consultation_answers.index', compact('consultationAnswers'));
     }
 
+
     public function create(ConsultationRequest $consultationRequest)
     {
-        return view('consultation_answers.create', compact('consultationRequest'));
+        $consultationRequests = ConsultationRequest::all();
+        return view('consultation_answers.create', compact('consultationRequests','consultationRequest'));
     }
 
-//    public function store(Request $request)
-//    {
-//        dd($request);
-//        $request->validate([
-//            'description' => 'nullable|string',
-//            'consultation_request_id' => 'required|exists:consultation_requests,id',
-//        ]);
-//
-//        ConsultationAnswer::create($request->all());
-//
-//        return redirect()->route('consultation_answers.index')->with('success', 'ConsultationAnswer created successfully.');
-//    }
 
     public function show(ConsultationAnswer $consultationAnswer)
     {
         return view('consultation_answers.show', compact('consultationAnswer'));
     }
-
     public function edit(ConsultationAnswer $consultationAnswer)
+{
+    $consultationRequests = ConsultationRequest::all();
+    return view('consultation_answers.edit', compact('consultationAnswer', 'consultationRequests'));
+}
+    public function store(Request $request)
     {
-        return view('consultation_answers.edit', compact('consultationAnswer'));
+        $request->validate([
+            'description' => 'required|string',
+            'consultation_request_id' => 'required|exists:consultation_requests,id',
+        ]);
+
+        ConsultationAnswer::create($request->all());
+
+        return redirect()->back()->with('success', 'Consultation answer created successfully.');
     }
 
     public function update(Request $request, ConsultationAnswer $consultationAnswer)
     {
         $request->validate([
-            'description' => 'nullable|string',
-            'consultation_request_id' => 'required|exists:consultation_requests,id',
+            'description' => 'required|string',
         ]);
 
         $consultationAnswer->update($request->all());
 
-        return redirect()->route('consultation_answers.index')->with('success', 'ConsultationAnswer updated successfully.');
+        return redirect()->back()->with('success', 'Consultation answer updated successfully.');
     }
 
     public function destroy(ConsultationAnswer $consultationAnswer)
     {
         $consultationAnswer->delete();
 
-        return redirect()->route('consultation_answers.index')->with('success', 'ConsultationAnswer deleted successfully.');
+        return redirect()->back()->with('success', 'Consultation answer deleted successfully.');
     }
 }

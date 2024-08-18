@@ -24,9 +24,9 @@
                     <x-nav-link :href="route('consultation_requests.index')" :active="request()->routeIs('consultation_requests.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                         {{ __('Consultation Requests') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('consultation_answers.index')" :active="request()->routeIs('consultation_answers.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
-                        {{ __('Consultation Answers') }}
-                    </x-nav-link>
+{{--                    <x-nav-link :href="route('consultation_answers.index')" :active="request()->routeIs('consultation_answers.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">--}}
+{{--                        {{ __('Consultation Answers') }}--}}
+{{--                    </x-nav-link>--}}
                 </div>
             </div>
 
@@ -89,9 +89,9 @@
             <x-responsive-nav-link :href="route('consultation_requests.index')" :active="request()->routeIs('consultation_requests.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-700 block px-3 py-2 rounded-md text-base font-medium">
                 {{ __('Consultation Requests') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('consultation_answers.index')" :active="request()->routeIs('consultation_answers.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-700 block px-3 py-2 rounded-md text-base font-medium">
-                {{ __('Consultation Answers') }}
-            </x-responsive-nav-link>
+{{--            <x-responsive-nav-link :href="route('consultation_answers.index')" :active="request()->routeIs('consultation_answers.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-700 block px-3 py-2 rounded-md text-base font-medium">--}}
+{{--                {{ __('Consultation Answers') }}--}}
+{{--            </x-responsive-nav-link>--}}
         </div>
 
         <div class="pt-4 pb-1 border-t border-indigo-800">

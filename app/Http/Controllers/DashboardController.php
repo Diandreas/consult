@@ -9,29 +9,43 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pendingRequests = ConsultationRequest::where('status', 'pending')->count();
-        $acceptedRequests = ConsultationRequest::where('status', 'accepted')->count();
-        $totalUsers = User::count();
-        $totalCategories = Category::count();
+        $search = $request->input('search');
+        $searchType = $request->input('search_type', 'all');
+        $query = ConsultationRequest::query();
 
-        // These methods need to be implemented based on your specific logic
-        $recentActivities = $this->getRecentActivities();
-        $averageResponseTime = $this->calculateAverageResponseTime();
-        $satisfactionRate = $this->calculateSatisfactionRate();
+        if ($search) {
+            switch ($searchType) {
+                case 'priority':
+                    $query->whereHas('priority', function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%');
+                    });
+                    break;
+                case 'status':
+                    $query->where('status', 'like', '%' . $search . '%');
+                    break;
+                case 'name':
+                    $query->where('name', 'like', '%' . $search . '%');
+                    break;
+                case 'description':
+                    $query->where('description', 'like', '%' . $search . '%');
+                    break;
+                default:
+                    $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', '%' . $search . '%')
+                            ->orWhere('description', 'like', '%' . $search . '%')
+                            ->orWhere('status', 'like', '%' . $search . '%')
+                            ->orWhereHas('priority', function ($sq) use ($search) {
+                                $sq->where('name', 'like', '%' . $search . '%');
+                            });
+                    });
+            }
+        }
 
-        return view('dashboard', compact(
-            'pendingRequests',
-            'acceptedRequests',
-            'recentActivities',
-            'totalUsers',
-            'totalCategories',
-            'averageResponseTime',
-            'satisfactionRate'
-        ));
+        $consultationRequests = $query->paginate(10);
+        return view('consultation_requests.index', compact('consultationRequests', 'search', 'searchType'));
     }
-
 // Implement these methods based on your specific requirements
     private function getRecentActivities()
     {

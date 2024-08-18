@@ -17,4 +17,5 @@ class ConsultationAnswer extends Model
     {
         return $this->belongsTo(ConsultationRequest::class);
     }
+
 }
