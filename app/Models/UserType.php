@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/UserType.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,20 +9,20 @@ class UserType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'created_by', 'updated_by'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+    ];
 
+    /**
+     * Get the users associated with the user type.
+     */
     public function users()
     {
-        return $this->hasMany(User::class);
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->hasMany(User::class, 'user_types_id');
     }
 }

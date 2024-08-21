@@ -27,18 +27,18 @@
                 </div>
 
                 <!-- Recent Activity -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
-                        <ul class="space-y-2">
-                            @forelse($recentActivities ?? [] as $activity)
-                                <li class="text-sm text-gray-600">{{ $activity }}</li>
-                            @empty
-                                <li class="text-sm text-gray-600">No recent activities</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
+{{--                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">--}}
+{{--                    <div class="p-6">--}}
+{{--                        <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>--}}
+{{--                        <ul class="space-y-2">--}}
+{{--                            @forelse($recentActivities ?? [] as $activity)--}}
+{{--                                <li class="text-sm text-gray-600">{{ $activity }}</li>--}}
+{{--                            @empty--}}
+{{--                                <li class="text-sm text-gray-600">No recent activities</li>--}}
+{{--                            @endforelse--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
                 <!-- Quick Actions -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -48,12 +48,12 @@
                             <a href="{{ route('consultation_requests.create') }}" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                                 Create New Request
                             </a>
-                            <a href="#" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ route('users.index') }}" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                                 Manage Users
                             </a>
-                            <a href="#" class="block w-full text-center bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
-                                View Reports
-                            </a>
+{{--                            <a href="#" class="block w-full text-center bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">--}}
+{{--                                View Reports--}}
+{{--                            </a>--}}
                         </div>
                     </div>
                 </div>

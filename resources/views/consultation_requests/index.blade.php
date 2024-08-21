@@ -36,9 +36,9 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($consultationRequests as $request)
-                <article class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform hover:scale-105 transition-transform duration-200">
-                    <header class="bg-indigo-600 text-white py-3 px-4">
-                        <h2 class="text-xl font-semibold">{{ $request->status }}</h2>
+                <article  class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform hover:scale-105 transition-transform duration-200 {{ $request->status == 'pending' ? 'border-yellow-500' : ($request->status == 'accepted' ? 'border-green-500' : 'border-red-500') }}">
+                    <header class="{{ $request->status == 'pending' ? 'bg-yellow-500' : ($request->status == 'accepted' ? 'bg-green-500' : 'bg-red-500') }} text-white py-3 px-4">
+                        <h2 class="text-xl font-semibold">{{ ucfirst($request->status) }}</h2>
                     </header>
                     <div class="p-4 flex-grow">
                         <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Priority:</span> {{ $request->priority->name }}</p>

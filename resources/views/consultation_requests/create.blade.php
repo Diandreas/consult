@@ -20,8 +20,8 @@
                 <input type="datetime-local" name="date_end" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="date_end">
             </div>
             <div class="form-group mb-4">
-                <label for="status" class="block text-gray-700">Status</label>
-                <input type="text" name="status" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="status">
+
+                <input type="hidden" name="status" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="status" value="pending">
             </div>
             <div class="form-group mb-4">
                 <label for="priority_id" class="block text-gray-700">Priority</label>
