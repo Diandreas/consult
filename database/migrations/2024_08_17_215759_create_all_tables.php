@@ -43,15 +43,15 @@ return new class extends Migration
         });
 
         // Table category
-        Schema::create('category', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255);
-            $table->timestamps();
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
-        });
+//        Schema::create('category', function (Blueprint $table) {
+//            $table->id();
+//            $table->string('name', 255);
+//            $table->timestamps();
+//            $table->unsignedBigInteger('created_by')->nullable();
+//            $table->unsignedBigInteger('updated_by')->nullable();
+//            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
+//            $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
+//        });
 
         // Table consultationRequests
         Schema::create('consultation_requests', function (Blueprint $table) {
@@ -62,13 +62,13 @@ return new class extends Migration
             $table->string('status', 45)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('priority_id');
-            $table->unsignedBigInteger('category_id');
+//            $table->unsignedBigInteger('category_id');
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('priority_id')->references('id')->on('priority')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
+//            $table->foreign('category_id')->references('id')->on('category')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('set null');
         });

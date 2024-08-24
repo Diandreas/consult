@@ -43,7 +43,11 @@ class ConsultationAnswerController extends Controller
             'consultation_request_id' => 'required|exists:consultation_requests,id',
         ]);
 
-        ConsultationAnswer::create($request->all());
+        $data = $request->all();
+        $data['created_by'] = auth()->id();
+        $data['updated_by'] = auth()->id();
+
+        ConsultationAnswer::create($data);
 
         return redirect()->back()->with('success', 'Consultation answer created successfully.');
     }
@@ -54,7 +58,10 @@ class ConsultationAnswerController extends Controller
             'description' => 'required|string',
         ]);
 
-        $consultationAnswer->update($request->all());
+        $data = $request->all();
+        $data['updated_by'] = auth()->id();
+
+        $consultationAnswer->update($data);
 
         return redirect()->back()->with('success', 'Consultation answer updated successfully.');
     }

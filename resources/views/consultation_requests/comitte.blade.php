@@ -36,28 +36,25 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($consultationRequests as $request)
-                <article  class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform hover:scale-105 transition-transform duration-500 {{ $request->status == 'pending' ? 'border-yellow-500' : ($request->status == 'accepted' ? 'border-green-500' : 'border-red-500') }}">
+                <article  class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform hover:scale-105 transition-transform duration-200 {{ $request->status == 'pending' ? 'border-yellow-500' : ($request->status == 'accepted' ? 'border-green-500' : 'border-red-500') }}">
                     <header class="{{ $request->status == 'pending' ? 'bg-yellow-500' : ($request->status == 'accepted' ? 'bg-green-500' : 'bg-red-500') }} text-white py-3 px-4">
                         <h2 class="text-xl font-semibold">{{ ucfirst($request->status) }}</h2>
                     </header>
                     <div class="p-4 flex-grow">
                         <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Priority:</span> {{ $request->priority->name }}</p>
-{{--                        <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Category:</span> {{ $request->category->name }}</p>--}}
+                        <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Category:</span> {{ $request->category->name }}</p>
                         <div class="text-gray-800 mb-4 line-clamp-3">{!! $request->description !!}</div>
                     </div>
                     <footer class="bg-gray-50 px-4 py-3 mt-auto">
                         <div class="flex justify-between items-center">
                             <a href="{{ route('consultation_requests.show', $request->id) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">View</a>
-                            @if($request->created_at->diffInMinutes(now()) <= 30)
-                                <a href="{{ route('consultation_requests.edit', $request->id) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
-                                <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Delete</button>
-                                </form>
-                            @endif
+                            <a href="{{ route('consultation_requests.edit', $request->id) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
+                            <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+                            </form>
                         </div>
-
                     </footer>
                 </article>
             @endforeach

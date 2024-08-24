@@ -12,7 +12,7 @@ class ConsultationRequest extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description', 'date_start', 'date_end', 'status', 'user_id', 'priority_id', 'category_id', 'created_by', 'updated_by'
+        'description', 'date_start', 'date_end', 'status', 'user_id', 'priority_id',  'created_by', 'updated_by'
     ];
 
     public function user()
@@ -43,5 +43,13 @@ class ConsultationRequest extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+    public function userFiles()
+    {
+        return $this->hasMany(UserFile::class, 'user_id', 'user_id');
+    }
+    public function userType()
+    {
+        return $this->belongsTo(UserType::class, 'user_types_id');
     }
 }

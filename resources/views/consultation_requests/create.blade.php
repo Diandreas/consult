@@ -31,14 +31,14 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group mb-4">
-                <label for="category_id" class="block text-gray-700">Category</label>
-                <select name="category_id" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="category_id">
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
+{{--            <div class="form-group mb-4">--}}
+{{--                <label for="category_id" class="block text-gray-700">Category</label>--}}
+{{--                <select name="category_id" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="category_id">--}}
+{{--                    @foreach($categories as $category)--}}
+{{--                        <option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+{{--            </div>--}}
             <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded">Submit</button>
         </form>
     </div>
