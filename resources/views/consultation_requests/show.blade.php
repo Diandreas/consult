@@ -6,10 +6,12 @@
         <div class="bg-white rounded shadow p-4 border-b border-indigo-800 mb-4">
             <h2 class="text-xl font-bold mb-2">Status: {{ $consultationRequest->status }}</h2>
             <p class="mb-2">Priority: {{ $consultationRequest->priority->name }}</p>
-{{--            <p class="mb-2">Category: {{ $consultationRequest->category->name }}</p>--}}
+            {{--            <p class="mb-2">Category: {{ $consultationRequest->category->name }}</p>--}}
             <p class="mb-2">{!! $consultationRequest->description !!}</p>
             <p class="mb-2">Date Start: {{ $consultationRequest->date_start }}</p>
             <p class="mb-2">Date End: {{ $consultationRequest->date_end }}</p>
+            <a href="{{ route('consultation_requests.showDocument', $consultationRequest) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">telecharger le document </a>
+
             <div class="flex justify-between mt-4">
                 @if(auth()->user()->user_types_id == 1)
                     <a href="{{ route('consultation_requests.edit', $consultationRequest->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
@@ -22,12 +24,17 @@
             </div>
         </div>
 
-        @if($consultationRequest->status !== 'accepted' && $consultationRequest->status !== 'rejected')
+        @if($consultationRequest->status !== 'finished' && $consultationRequest->status !== 'rejected')
             <div class="flex justify-end space-x-2 mb-4">
-                <form action="{{ route('consultation_requests.accept', $consultationRequest->id) }}" method="POST" class="inline">
+                <form action="{{ route('consultation_requests.sendToCommittee', $consultationRequest->id) }}" method="POST" class="inline">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Accept</button>
+                    <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">Send to Committee</button>
+                </form>
+                <form action="{{ route('consultation_requests.finish', $consultationRequest->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Finish</button>
                 </form>
                 <form action="{{ route('consultation_requests.reject', $consultationRequest->id) }}" method="POST" class="inline">
                     @csrf

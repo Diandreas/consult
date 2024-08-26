@@ -87,6 +87,11 @@ class ConsultationRequestController extends Controller
         return view('consultation_requests.show', compact('consultationRequest'));
     }
 
+    public function showDocument(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->load('consultationAnswers.user');
+        return view('consultation_requests.document', compact('consultationRequest'));
+    }
 
     public function edit(ConsultationRequest $consultationRequest)
     {
@@ -123,18 +128,27 @@ class ConsultationRequestController extends Controller
         $consultationRequest->delete();
         return redirect()->route('consultation_requests.index')->with('success', 'Consultation request deleted successfully.');
     }
-
-    public function accept(ConsultationRequest $consultationRequest)
-    {
-        $consultationRequest->status = 'accepted';
-        $consultationRequest->updated_by = Auth::id();
-        $consultationRequest->save();
-
-        return redirect()->back()->with('success', 'Consultation request accepted successfully.');
-    }
     public function showFile(ConsultationRequest $consultationRequest, UserFile $userFile)
     {
         return view('consultation_requests.showFile', compact('consultationRequest', 'userFile'));
+    }
+
+    public function sendToCommittee(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'comit';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        return redirect()->back()->with('success', 'Consultation request sent to committee successfully.');
+    }
+
+    public function finish(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'finished';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        return redirect()->back()->with('success', 'Consultation request finished successfully.');
     }
 
     public function reject(ConsultationRequest $consultationRequest)
@@ -145,4 +159,5 @@ class ConsultationRequestController extends Controller
 
         return redirect()->back()->with('success', 'Consultation request rejected successfully.');
     }
+
 }

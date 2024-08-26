@@ -3,7 +3,7 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="text-white font-bold text-xl">
+                    <a href="{{ route('home') }}" class="text-white font-bold text-xl">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -26,8 +26,8 @@
                         <x-nav-link :href="route('priorities.index')" :active="request()->routeIs('priorities.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                             {{ __('Priorities') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
-                            {{ __('Categories') }}
+                        <x-nav-link :href="route('workflow.index')" :active="request()->routeIs('workflow.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
+                            {{ __('workflow') }}
                         </x-nav-link>
                         <x-nav-link :href="route('consultation_requests.index')" :active="request()->routeIs('consultation_requests.*')" class="text-indigo-200 hover:text-white hover:bg-indigo-600 px-3 py-2 rounded-md text-sm font-medium">
                             {{ __('Consultation Requests') }}

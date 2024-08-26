@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFileController;
+use App\Http\Controllers\WorkflowController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\PriorityController;
@@ -17,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/consultation-requests', [ConsultationRequestController::class, 'indexByUser'])->name('consultation_requests.indexByUser');
+Route::get('/consultation-requests/{consultationRequest}', [ConsultationRequestController::class, 'showDocument'])->name('consultation_requests.showDocument');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -40,6 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/user-files/{userFile}/download', [UserFileController::class, 'download'])->name('user_files.download');
     Route::delete('/user-files/{userFile}', [UserFileController::class, 'destroy'])->name('user_files.destroy');
     Route::get('/consultation-requests/{consultationRequest}/files/{userFile}', [ConsultationRequestController::class, 'showFile'])->name('consultation_requests.files.show');
+
+
+    Route::resource('workflow', WorkflowController::class);
+    Route::patch('/consultation_requests/{consultationRequest}/sendToCommittee', [ConsultationRequestController::class, 'sendToCommittee'])->name('consultation_requests.sendToCommittee');
+    Route::patch('/consultation_requests/{consultationRequest}/finish', [ConsultationRequestController::class, 'finish'])->name('consultation_requests.finish');
+    Route::patch('/consultation_requests/{consultationRequest}/reject', [ConsultationRequestController::class, 'reject'])->name('consultation_requests.reject');
 });
 
 require __DIR__.'/auth.php';
