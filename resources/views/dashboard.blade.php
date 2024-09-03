@@ -69,22 +69,6 @@
                 </div>
             </div>
 
-            <!-- Statistiques détaillées -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Statistiques par catégorie -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <h3 class="text-lg font-semibold mb-4">Statistiques par catégorie</h3>
-                        <div class="space-y-4">
-                            @foreach ($statisticsByCategory as $statistic)
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-600">{{ $statistic->category->name }}</span>
-                                    <span class="text-xl font-bold text-blue-600">{{ $statistic->total }}</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Statistiques par type d'utilisateur -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

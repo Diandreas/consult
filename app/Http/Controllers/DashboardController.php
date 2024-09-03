@@ -29,10 +29,6 @@ class DashboardController extends Controller
         $satisfactionRate = 95; // Placeholder value, replace with actual calculation
 
         // Fetch statistics by category
-        $statisticsByCategory = ConsultationRequest::select('category_id', DB::raw('count(*) as total'))
-            ->groupBy('category_id')
-            ->with('category:id,name')
-            ->get();
 
         // Fetch statistics by user type
         $statisticsByUserType = ConsultationRequest::join('users', 'consultation_requests.user_id', '=', 'users.id')
@@ -54,7 +50,6 @@ class DashboardController extends Controller
             'totalCategories',
             'averageResponseTime',
             'satisfactionRate',
-            'statisticsByCategory',
             'statisticsByUserType',
             'statisticsByPeriod'
         ));
@@ -70,10 +65,7 @@ class DashboardController extends Controller
         $averageResponseTime = '2 h'; // Remplacez par le calcul réel
         $satisfactionRate = 95; // Remplacez par le calcul réel
 
-        $statisticsByCategory = ConsultationRequest::select('category_id', DB::raw('count(*) as total'))
-            ->groupBy('category_id')
-            ->with('category:id,name')
-            ->get();
+
 
         $statisticsByUserType = ConsultationRequest::join('users', 'consultation_requests.user_id', '=', 'users.id')
             ->select('users.user_types_id', DB::raw('count(*) as total'))
@@ -98,7 +90,6 @@ class DashboardController extends Controller
             'totalCategories',
             'averageResponseTime',
             'satisfactionRate',
-            'statisticsByCategory',
             'statisticsByUserType',
             'statisticsByPeriod',
             'appName',

@@ -33,19 +33,7 @@
     <p>Temps de réponse moyen : {{ $averageResponseTime }}</p>
     <p>Taux de satisfaction : {{ $satisfactionRate }}%</p>
 
-    <h3>Statistiques par catégorie</h3>
-    <table>
-        <tr>
-            <th>Catégorie</th>
-            <th>Total</th>
-        </tr>
-        @foreach ($statisticsByCategory as $statistic)
-            <tr>
-                <td>{{ $statistic->category->name }}</td>
-                <td>{{ $statistic->total }}</td>
-            </tr>
-        @endforeach
-    </table>
+
 
     <h3>Statistiques par type d'utilisateur</h3>
     <table>
