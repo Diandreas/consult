@@ -34,6 +34,20 @@ class UserFileController extends Controller
         return response()->json($userFile);
     }
 
+    public function preview($id)
+    {
+        $userFile = UserFile::findOrFail($id);
+
+        // Vérifier si le fichier est un PDF
+        if (pathinfo($userFile->file_path, PATHINFO_EXTENSION) !== 'pdf') {
+            abort(404, 'Aperçu non disponible');
+        }
+
+        $filePath = storage_path('app/' . $userFile->file_path);
+
+        // Retourner la réponse pour afficher le PDF
+        return response()->file($filePath);
+    }
     public function update(Request $request, UserFile $userFile)
     {
         $request->validate([

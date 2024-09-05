@@ -84,6 +84,7 @@ class ConsultationRequestController extends Controller
     public function show(ConsultationRequest $consultationRequest)
     {
         $consultationRequest->load('consultationAnswers.user', 'userFiles');
+//        dd($consultationRequest);
         return view('consultation_requests.show', compact('consultationRequest'));
     }
 

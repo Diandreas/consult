@@ -98,6 +98,10 @@ return [
     'cipher' => 'AES-256-CBC',
 
     'key' => env('APP_KEY'),
+    'available_locales' => [
+        'English' => 'en',
+        'French' => 'fr',
+    ],
 
     'previous_keys' => [
         ...array_filter(

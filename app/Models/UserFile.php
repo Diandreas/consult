@@ -31,4 +31,10 @@ class UserFile extends Model
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+
+    // Adding a relationship to link the UserFile to the ConsultationRequest
+    public function consultationRequest()
+    {
+        return $this->belongsTo(ConsultationRequest::class, 'user_id', 'user_id');
+    }
 }

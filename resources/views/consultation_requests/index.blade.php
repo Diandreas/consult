@@ -1,66 +1,82 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
-        <header class="mb-8">
-            <h1 class="text-4xl font-bold text-indigo-800 mb-2">Consultation Requests</h1>
-            <p class="text-lg text-gray-600">Manage and view all consultation requests</p>
+    <div class="container my-5">
+        <header class="mb-4 text-center">
+            <h1 class="display-4 text-primary">Consultation Requests</h1>
+            <p class="lead text-muted">Manage and view all consultation requests</p>
         </header>
 
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <form action="{{ route('consultation_requests.index') }}" method="GET" class="flex w-full md:w-auto">
-                    <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="flex-grow md:flex-grow-0 border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <select name="search_type" class="border-t border-b border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="all" {{ request('search_type') == 'all' ? 'selected' : '' }}>All</option>
-                        <option value="priority" {{ request('search_type') == 'priority' ? 'selected' : '' }}>Priority</option>
-                        <option value="status" {{ request('search_type') == 'status' ? 'selected' : '' }}>Status</option>
-                        <option value="name" {{ request('search_type') == 'name' ? 'selected' : '' }}>Name</option>
-                        <option value="description" {{ request('search_type') == 'description' ? 'selected' : '' }}>Description</option>
-                    </select>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-r transition duration-150 ease-in-out flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                        </svg>
-                        Search
-                    </button>
-                </form>
-                <a href="{{ route('consultation_requests.create') }}" class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded transition duration-150 ease-in-out flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    Create New Request
-                </a>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                    <form action="{{ route('consultation_requests.index') }}" method="GET" class="d-flex w-100 w-md-auto mb-3 mb-md-0">
+                        <div class="input-group">
+                            <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="form-control" aria-label="Search">
+                            <select name="search_type" class="form-select">
+                                <option value="all" {{ request('search_type') == 'all' ? 'selected' : '' }}>All</option>
+                                <option value="priority" {{ request('search_type') == 'priority' ? 'selected' : '' }}>Priority</option>
+                                <option value="status" {{ request('search_type') == 'status' ? 'selected' : '' }}>Status</option>
+                                <option value="name" {{ request('search_type') == 'name' ? 'selected' : '' }}>Name</option>
+                                <option value="description" {{ request('search_type') == 'description' ? 'selected' : '' }}>Description</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <a href="{{ route('consultation_requests.create') }}" class="btn btn-success">
+                        <i class="bi bi-plus-lg"></i> Add New Request
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($consultationRequests as $request)
-                <article  class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col transform hover:scale-105 transition-transform duration-500 {{ $request->status == 'pending' ? 'border-yellow-500' : ($request->status == 'accepted' ? 'border-green-500' : 'border-red-500') }}">
-                    <header class="{{ $request->status == 'pending' ? 'bg-yellow-500' : ($request->status == 'accepted' ? 'bg-green-500' : 'bg-red-500') }} text-white py-3 px-4">
-                        <h2 class="text-xl font-semibold">{{ ucfirst($request->status) }}</h2>
-                    </header>
-                    <div class="p-4 flex-grow">
-                        <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Priority:</span> {{ $request->priority->name }}</p>
-{{--                        <p class="text-gray-600 mb-2"><span class="font-semibold text-indigo-600">Category:</span> {{ $request->category->name }}</p>--}}
-                        <div class="text-gray-800 mb-4 line-clamp-3">{!! $request->description !!}</div>
-                    </div>
-                    <footer class="bg-gray-50 px-4 py-3 mt-auto">
-                        <div class="flex justify-between items-center">
-                            <a href="{{ route('consultation_requests.show', $request->id) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">View</a>
+                <div class="col">
+                    <div class="card h-100 border-start-4 {{ $request->status == 'pending' ? 'border-warning' : ($request->status == 'comit' ? 'border-primary' : ($request->status == 'finished' ? 'border-success' : ($request->status == 'rejected' ? 'border-danger' : 'border-secondary'))) }}">
+                        <div class="card-header text-white {{ $request->status == 'pending' ? 'bg-warning' : ($request->status == 'comit' ? 'bg-primary' : ($request->status == 'finished' ? 'bg-success' : ($request->status == 'rejected' ? 'bg-danger' : 'bg-secondary'))) }}">
+                            <i class="bi {{ $request->status == 'pending' ? 'bi-hourglass-split' : ($request->status == 'comit' ? 'bi-check-circle' : ($request->status == 'finished' ? 'bi-check-circle-fill' : ($request->status == 'rejected' ? 'bi-x-circle' : 'bi-question-circle'))) }} me-2"></i>
+                            <strong>{{ ucfirst($request->status) }}</strong>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <p class="text-muted mb-2"><i class="bi bi-flag-fill text-primary"></i> {{ $request->priority->name }}</p>
+                            <p class="card-text text-truncate">{!! $request->description !!}</p>
+                        </div>
+                        <div class="card-footer bg-light d-flex justify-content-between align-items-center">
+                            <a href="{{ route('consultation_requests.show', $request->id) }}" class="text-primary">
+                                <i class="bi bi-eye"></i>
+                            </a>
                             @if($request->created_at->diffInMinutes(now()) <= 30)
-                                <a href="{{ route('consultation_requests.edit', $request->id) }}" class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</a>
-                                <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Delete</button>
-                                </form>
+                                <div class="d-flex align-items-center">
+                                    <a href="{{ route('consultation_requests.edit', $request->id) }}" class="text-primary me-3">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="mb-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link text-danger p-0">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             @endif
                         </div>
-
-                    </footer>
-                </article>
+                    </div>
+                </div>
             @endforeach
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseover', function() {
+                this.classList.add('shadow-lg');
+            });
+            card.addEventListener('mouseout', function() {
+                this.classList.remove('shadow-lg');
+            });
+        });
+    </script>
 @endsection
