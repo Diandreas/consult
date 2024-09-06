@@ -21,6 +21,10 @@
 <body class="antialiased">
 <div class="container mt-5">
     <div class="jumbotron">
+        <div class="mt-4 text-center">
+            <a href="{{ route('language.switch', 'en') }}" class="btn btn-outline-primary me-2">English</a>
+            <a href="{{ route('language.switch', 'fr') }}" class="btn btn-outline-primary">Français</a>
+        </div>
         <h1 class="display-4">Bienvenue à la Consultation des Archives Nationales</h1>
         <p class="lead">Consultez et gérez les archives nationales en toute simplicité.</p>
         <hr class="my-4">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserFileController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConsultationRequestController;
 use App\Http\Controllers\ConsultationAnswerController;
 
-
+Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 Route::get('/', function () {
     return view('welcome');
 });

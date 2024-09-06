@@ -21,6 +21,10 @@
 <body class="font-sans antialiased bg-indigo-50">
 <div class="min-h-screen flex flex-col">
     @include('layouts.navigation')
+    <div class="mt-4 text-center">
+        <a href="{{ route('language.switch', 'en') }}" class="btn btn-outline-primary me-2">English</a>
+        <a href="{{ route('language.switch', 'fr') }}" class="btn btn-outline-primary">Français</a>
+    </div>
 
     @isset($header)
         <header class="bg-white shadow">
