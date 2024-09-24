@@ -1,8 +1,8 @@
 {
     "Tableau de bord utilisateur": "Tableau de bord utilisateur",
     "Bienvenue": "Bienvenue",
-    "Statistiques utilisateur": "User Statistics",
-    "Demandes de consultation": "Consultation Requests",
+    "Statistiques utilisateur": "Statistiques utilisateur",
+    "Demandes de consultation": "Demandes de consultation",
     "Demandes en attente": "Demandes en attente",
     "Demandes acceptées": "Demandes acceptées",
     "Taux de satisfaction": "Taux de satisfaction",
@@ -73,7 +73,10 @@
     "Supprimer": "Supprimer",
     "Create Consultation Request": "Faire une Demande de Consultation",
     "Pending": "En Attente",
-    "Comit": "Engagé",
+    "Comit": "Comitee",
     "Finished": "Terminé",
-    "Rejected": "Rejeté"
+    "Rejected": "Rejeté",
+    "This application allows you to consult and manage national archives. You can submit consultation requests, track their status, and access responses.": "Cette application vous permet de consulter et de gérer les archives nationales. Vous pouvez soumettre des demandes de consultation, suivre leur statut et accéder aux réponses.",
+    "The national archives contain a vast collection of historical, administrative, legislative, and cultural documents. You can consult documents such as birth certificates, marriage certificates, death certificates, military documents, property documents, government documents, and much more.": "Les archives nationales contiennent une vaste collection de documents historiques, administratifs, législatifs et culturels. Vous pouvez consulter des documents tels que des actes de naissance, des actes de mariage, des actes de décès, des documents militaires, des documents de propriété, des documents gouvernementaux, et bien plus encore.",
+    "Our consultation request management system allows you to submit requests to access these documents, track the status of your requests, and receive detailed responses. Whether you are a researcher, historian, genealogist, or simply curious, our platform is designed to help you easily access the information you need.": "Notre système de gestion des demandes de consultation vous permet de soumettre des demandes pour accéder à ces documents, de suivre l'état de vos demandes et de recevoir des réponses détaillées. Que vous soyez un chercheur, un historien, un généalogiste ou simplement curieux, notre plateforme est conçue pour vous aider à accéder facilement aux informations dont vous avez besoin."
 }

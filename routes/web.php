@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultationRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ConsultationRequestController;
 use App\Http\Controllers\ConsultationAnswerController;
 
 Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('users', UserController::class);
     Route::post('/user-files', [UserFileController::class, 'store'])->name('user_files.store');
     Route::get('/user-files/{userFile}/download', [UserFileController::class, 'download'])->name('user_files.download');
+    Route::get('/user-files/{userFile}/preview', [UserFileController::class, 'preview'])->name('user_files.preview');
+
     Route::delete('/user-files/{userFile}', [UserFileController::class, 'destroy'])->name('user_files.destroy');
     Route::get('/consultation-requests/{consultationRequest}/files/{userFile}', [ConsultationRequestController::class, 'showFile'])->name('consultation_requests.files.show');
 

@@ -25,13 +25,13 @@
             <a href="{{ route('language.switch', 'en') }}" class="btn btn-outline-primary me-2">English</a>
             <a href="{{ route('language.switch', 'fr') }}" class="btn btn-outline-primary">Français</a>
         </div>
-        <h1 class="display-4">Bienvenue à la Consultation des Archives Nationales</h1>
-        <p class="lead">Consultez et gérez les archives nationales en toute simplicité.</p>
+        <h1 class="display-4">{{ __('Bienvenue') }}</h1>
+        <p class="lead">{{ __('Consultation Requests') }}</p>
         <hr class="my-4">
-        <p>Cette application vous permet de consulter et de gérer les archives nationales. Vous pouvez soumettre des demandes de consultation, suivre leur statut et accéder aux réponses.</p>
-        <p>Les archives nationales contiennent une vaste collection de documents historiques, administratifs, législatifs et culturels. Vous pouvez consulter des documents tels que des actes de naissance, des actes de mariage, des actes de décès, des documents militaires, des documents de propriété, des documents gouvernementaux, et bien plus encore.</p>
-        <p>Notre système de gestion des demandes de consultation vous permet de soumettre des demandes pour accéder à ces documents, de suivre l'état de vos demandes et de recevoir des réponses détaillées. Que vous soyez un chercheur, un historien, un généalogiste ou simplement curieux, notre plateforme est conçue pour vous aider à accéder facilement aux informations dont vous avez besoin.</p>
-        <a class="btn btn-primary btn-lg" href="{{ route('consultation_requests.index') }}" role="button">Consulter les Demandes</a>
+        <p>{{ __('This application allows you to consult and manage national archives. You can submit consultation requests, track their status, and access responses.') }}</p>
+        <p>{{ __('The national archives contain a vast collection of historical, administrative, legislative, and cultural documents. You can consult documents such as birth certificates, marriage certificates, death certificates, military documents, property documents, government documents, and much more.') }}</p>
+        <p>{{ __('Our consultation request management system allows you to submit requests to access these documents, track the status of your requests, and receive detailed responses. Whether you are a researcher, historian, genealogist, or simply curious, our platform is designed to help you easily access the information you need.') }}</p>
+        <a class="btn btn-primary btn-lg" href="{{ route('consultation_requests.index') }}" role="button">{{ __('Consult Requests') }}</a>
     </div>
 </div>
 

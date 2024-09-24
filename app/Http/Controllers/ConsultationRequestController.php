@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\ConsultationAnswer;
 use App\Models\ConsultationRequest;
 use App\Models\Priority;
 use App\Models\UserFile;
@@ -63,7 +64,6 @@ class ConsultationRequestController extends Controller
             'date_end' => 'nullable|date',
             'status' => 'nullable|string|max:45',
             'priority_id' => 'required|exists:priority,id',
-//            'category_id' => 'required|exists:category,id',
         ]);
 
         $consultationRequest = new ConsultationRequest();
@@ -73,14 +73,50 @@ class ConsultationRequestController extends Controller
         $consultationRequest->status = $request->status;
         $consultationRequest->user_id = Auth::id();
         $consultationRequest->priority_id = $request->priority_id;
-//        $consultationRequest->category_id = $request->category_id;
         $consultationRequest->created_by = Auth::id();
         $consultationRequest->updated_by = Auth::id();
         $consultationRequest->save();
 
-        return redirect()->route('consultation_requests.index')->with('success', 'Consultation request created successfully.');
+        // Créer une réponse automatique
+        $message = "VOTRE DEMANDE A ÉTÉ EFFECTUÉE AVEC SUCCÈS. VOUS SEREZ NOTIFIÉ SUR LES RÉSULTATS DE LA RECHERCHE INCESSAMMENT.";
+        $this->createAutoResponse($consultationRequest, $message);
+
+        return redirect()->route('consultation_requests.index')->with('success', 'Demande de consultation créée avec succès.');
     }
 
+    public function reject(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'rejected';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        $message = "NOUS SOMMES DÉSOLÉS DE NE POUVOIR DONNER SUITE À VOTRE DEMANDE. LES DOCUMENTS DEMANDÉS SONT INTROUVABLES/SONT CLASSÉS CONFIDENTIELS/INEXPLOITABLES POUR CAUSE DE DÉTÉRIORATION AVANCÉE/NE SE TROUVENT PAS DANS NOS LOCAUX. PRIÈRE DE VOUS RENDRE À L'ADMINISTRATION INDIQUÉE POUR RECEVOIR LE DOCUMENT.";
+        $this->createAutoResponse($consultationRequest, $message);
+
+        return redirect()->back()->with('info', 'Demande de consultation rejetée.');
+    }
+
+    public function finish(ConsultationRequest $consultationRequest)
+    {
+        $consultationRequest->status = 'finished';
+        $consultationRequest->updated_by = Auth::id();
+        $consultationRequest->save();
+
+        $message = "VOTRE DEMANDE A ÉTÉ TRAITÉE AVEC SUCCÈS. CI-JOINT EN PDF LES DOCUMENTS DEMANDÉS. VEUILLEZ LES TÉLÉCHARGER POUR EXPLOITATION.";
+        $this->createAutoResponse($consultationRequest, $message);
+
+        return redirect()->back()->with('success', 'Demande de consultation terminée.');
+    }
+
+    private function createAutoResponse(ConsultationRequest $consultationRequest, string $message)
+    {
+        ConsultationAnswer::create([
+            'description' => $message,
+            'consultation_request_id' => $consultationRequest->id,
+            'created_by' => Auth::id(),
+            'updated_by' => Auth::id(),
+        ]);
+    }
     public function show(ConsultationRequest $consultationRequest)
     {
         $consultationRequest->load('consultationAnswers.user', 'userFiles');
@@ -143,22 +179,24 @@ class ConsultationRequestController extends Controller
         return redirect()->back()->with('success', 'Consultation request sent to committee successfully.');
     }
 
-    public function finish(ConsultationRequest $consultationRequest)
-    {
-        $consultationRequest->status = 'finished';
-        $consultationRequest->updated_by = Auth::id();
-        $consultationRequest->save();
+//    public function reject(ConsultationRequest $consultationRequest)
+//    {
+//        $consultationRequest->status = 'rejected';
+//        $consultationRequest->updated_by = Auth::id();
+//        $consultationRequest->save();
+//
+//        $message = "NOUS SOMMES DÉSOLÉS DE NE POUVOIR DONNER SUITE À VOTRE DEMANDE. LES DOCUMENTS DEMANDÉS SONT INTROUVABLES/SONT CLASSÉS CONFIDENTIELS/INEXPLOITABLES POUR CAUSE DE DÉTÉRIORATION AVANCÉE/NE SE TROUVENT PAS DANS NOS LOCAUX. PRIÈRE DE VOUS RENDRE À L'ADMINISTRATION INDIQUÉE POUR RECEVOIR LE DOCUMENT.";
+//        return redirect()->back()->with('info', $message);
+//    }
 
-        return redirect()->back()->with('success', 'Consultation request finished successfully.');
-    }
-
-    public function reject(ConsultationRequest $consultationRequest)
-    {
-        $consultationRequest->status = 'rejected';
-        $consultationRequest->updated_by = Auth::id();
-        $consultationRequest->save();
-
-        return redirect()->back()->with('success', 'Consultation request rejected successfully.');
-    }
+//    public function finish(ConsultationRequest $consultationRequest)
+//    {
+//        $consultationRequest->status = 'finished';
+//        $consultationRequest->updated_by = Auth::id();
+//        $consultationRequest->save();
+//
+//        $message = "VOTRE DEMANDE A ÉTÉ TRAITÉE AVEC SUCCÈS. CI-JOINT EN PDF LES DOCUMENTS DEMANDÉS. VEUILLEZ LES TÉLÉCHARGER POUR EXPLOITATION.";
+//        return redirect()->back()->with('success', $message);
+//    }
 
 }

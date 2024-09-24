@@ -4,7 +4,9 @@
             <div class="flex">
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}" class="text-white font-bold text-xl">
-                        {{ config('app.name', 'Laravel') }}
+                        <x-application-logo class="h-16 w-auto mr-4"> C</x-application-logo>
+
+{{--                        {{ config('app.name', 'Laravel') }}--}}
                     </a>
                 </div>
 
