@@ -14,7 +14,7 @@ class ConsultationAnswerController extends Controller
         $search = $request->input('search');
         $consultationAnswers = ConsultationAnswer::with('consultationRequest')
             ->where('description', 'like', "%$search%")
-            ->paginate(10);
+            ->paginate(100);
 
         return view('consultation_answers.index', compact('consultationAnswers'));
     }

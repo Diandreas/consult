@@ -27,6 +27,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::get('/dashboard/print', [DashboardController::class, 'printStatistics'])->name('dashboard.print');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -51,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('workflow', WorkflowController::class);
     Route::patch('/consultation_requests/{consultationRequest}/sendToCommittee', [ConsultationRequestController::class, 'sendToCommittee'])->name('consultation_requests.sendToCommittee');
     Route::patch('/consultation_requests/{consultationRequest}/finish', [ConsultationRequestController::class, 'finish'])->name('consultation_requests.finish');
-    Route::patch('/consultation_requests/{consultationRequest}/reject', [ConsultationRequestController::class, 'reject'])->name('consultation_requests.reject');
+//    Route::patch('/consultation_requests/{consultationRequest}/reject', [ConsultationRequestController::class, 'reject'])->name('consultation_requests.reject');
 });
 
 require __DIR__.'/auth.php';

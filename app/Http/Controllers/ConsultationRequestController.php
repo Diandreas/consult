@@ -24,7 +24,7 @@ class ConsultationRequestController extends Controller
             });
         }
 
-        $consultationRequests = $query->paginate(10);
+        $consultationRequests = $query->paginate(100);
         return view('consultation_requests.index', compact('consultationRequests'));
     }
     public function indexByUser(Request $request)

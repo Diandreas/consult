@@ -15,7 +15,7 @@ class DashboardController extends Controller
         // Fetch pending and accepted requests
         $pendingRequests = ConsultationRequest::where('status', 'pending')->count();
         $acceptedRequests = ConsultationRequest::where('status', 'accepted')->count();
-
+        $rejectedRequests = ConsultationRequest::where('status', 'rejected')->count();
         // Fetch total users
         $totalUsers = User::count();
 
@@ -46,6 +46,7 @@ class DashboardController extends Controller
         return view('dashboard', compact(
             'pendingRequests',
             'acceptedRequests',
+            'rejectedRequests',
             'totalUsers',
             'totalCategories',
             'averageResponseTime',
