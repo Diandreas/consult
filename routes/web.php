@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ConsultationRequestController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
@@ -53,6 +55,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/consultation_requests/{consultationRequest}/sendToCommittee', [ConsultationRequestController::class, 'sendToCommittee'])->name('consultation_requests.sendToCommittee');
     Route::patch('/consultation_requests/{consultationRequest}/finish', [ConsultationRequestController::class, 'finish'])->name('consultation_requests.finish');
 //    Route::patch('/consultation_requests/{consultationRequest}/reject', [ConsultationRequestController::class, 'reject'])->name('consultation_requests.reject');
+    
+    // Document routes
+    Route::get('/documents/export', [DocumentController::class, 'export'])->name('documents.export');
+    Route::get('/documents/export-excel', [DocumentController::class, 'exportExcel'])->name('documents.export-excel');
+    Route::get('/documents/import-form', [DocumentController::class, 'importForm'])->name('documents.import-form');
+    Route::get('/documents/{document}/download', [DocumentController::class, 'download'])->name('documents.download');
+    Route::resource('documents', DocumentController::class);
+    
+    // Document Type routes
+    Route::resource('document-types', DocumentTypeController::class);
+
+    // Routes pour l'importation de documents
+    Route::get('documents/import', [App\Http\Controllers\DocumentController::class, 'importForm'])->name('documents.import.form');
+    Route::post('documents/process-import', [App\Http\Controllers\DocumentController::class, 'processImport'])->name('documents.process-import');
+    Route::post('documents/import-documents', [App\Http\Controllers\DocumentController::class, 'importDocuments'])->name('documents.import-documents');
 });
 
 require __DIR__.'/auth.php';

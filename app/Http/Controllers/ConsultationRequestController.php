@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\ConsultationAnswer;
 use App\Models\ConsultationRequest;
+use App\Models\Document;
 use App\Models\Priority;
 use App\Models\UserFile;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class ConsultationRequestController extends Controller
     public function indexByUser(Request $request)
     {
         $search = $request->input('search');
-        $userId = auth()->id();
+        $userId = Auth::id();
 
         $query = ConsultationRequest::where('user_id', $userId);
 
@@ -53,7 +54,8 @@ class ConsultationRequestController extends Controller
     {
         $priorities = Priority::all();
         $categories = Category::all();
-        return view('consultation_requests.create', compact('priorities', 'categories'));
+        $documents = Document::all();
+        return view('consultation_requests.create', compact('priorities', 'categories', 'documents'));
     }
 
     public function store(Request $request)
@@ -64,6 +66,7 @@ class ConsultationRequestController extends Controller
             'date_end' => 'nullable|date',
             'status' => 'nullable|string|max:45',
             'priority_id' => 'required|exists:priority,id',
+            'document_id' => 'nullable|exists:documents,id',
         ]);
 
         $consultationRequest = new ConsultationRequest();
@@ -73,6 +76,7 @@ class ConsultationRequestController extends Controller
         $consultationRequest->status = $request->status;
         $consultationRequest->user_id = Auth::id();
         $consultationRequest->priority_id = $request->priority_id;
+        $consultationRequest->document_id = $request->document_id;
         $consultationRequest->created_by = Auth::id();
         $consultationRequest->updated_by = Auth::id();
         $consultationRequest->save();
@@ -119,14 +123,13 @@ class ConsultationRequestController extends Controller
     }
     public function show(ConsultationRequest $consultationRequest)
     {
-        $consultationRequest->load('consultationAnswers.user', 'userFiles');
-//        dd($consultationRequest);
+        $consultationRequest->load('consultationAnswers.user', 'userFiles', 'document');
         return view('consultation_requests.show', compact('consultationRequest'));
     }
 
     public function showDocument(ConsultationRequest $consultationRequest)
     {
-        $consultationRequest->load('consultationAnswers.user');
+        $consultationRequest->load('consultationAnswers.user', 'document');
         return view('consultation_requests.document', compact('consultationRequest'));
     }
 
@@ -134,7 +137,8 @@ class ConsultationRequestController extends Controller
     {
         $priorities = Priority::all();
         $categories = Category::all();
-        return view('consultation_requests.edit', compact('consultationRequest', 'priorities', 'categories'));
+        $documents = Document::all();
+        return view('consultation_requests.edit', compact('consultationRequest', 'priorities', 'categories', 'documents'));
     }
 
     public function update(Request $request, ConsultationRequest $consultationRequest)
@@ -145,7 +149,7 @@ class ConsultationRequestController extends Controller
             'date_end' => 'nullable|date',
             'status' => 'nullable|string|max:45',
             'priority_id' => 'required|exists:priority,id',
-//            'category_id' => 'required|exists:category,id',
+            'document_id' => 'nullable|exists:documents,id',
         ]);
 
         $consultationRequest->description = $request->description;
@@ -153,7 +157,7 @@ class ConsultationRequestController extends Controller
         $consultationRequest->date_end = $request->date_end;
         $consultationRequest->status = $request->status;
         $consultationRequest->priority_id = $request->priority_id;
-//        $consultationRequest->category_id = $request->category_id;
+        $consultationRequest->document_id = $request->document_id;
         $consultationRequest->updated_by = Auth::id();
         $consultationRequest->save();
 

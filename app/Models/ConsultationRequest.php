@@ -17,7 +17,8 @@ class ConsultationRequest extends Model
         'user_id',
         'priority_id',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'document_id'
     ];
 
     public function user()
@@ -60,5 +61,13 @@ class ConsultationRequest extends Model
     public function userType()
     {
         return $this->belongsTo(UserType::class, 'user_types_id');
+    }
+
+    /**
+     * Obtenir le document associé à la requête de consultation.
+     */
+    public function document()
+    {
+        return $this->belongsTo(Document::class);
     }
 }

@@ -11,6 +11,22 @@
             <p class="mb-2">{{ __('Date End') }}: {{ $consultationRequest->date_end }}</p>
             <a href="{{ route('consultation_requests.showDocument', $consultationRequest) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ __('Download Document') }}</a>
 
+            @if($consultationRequest->document)
+            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                <h3 class="text-lg font-semibold text-blue-700">{{ __('Document de la bibliothèque associé') }}</h3>
+                <p class="mb-1"><strong>{{ __('Titre') }}:</strong> {{ $consultationRequest->document->title }}</p>
+                <p class="mb-1"><strong>{{ __('Type') }}:</strong> {{ $consultationRequest->document->documentType->name }}</p>
+                <p class="mb-1"><strong>{{ __('Date') }}:</strong> {{ \Carbon\Carbon::parse($consultationRequest->document->date)->format('d/m/Y') }}</p>
+                <p class="mb-3"><strong>{{ __('Description') }}:</strong> {{ $consultationRequest->document->description }}</p>
+                
+                @if($consultationRequest->document->file_path)
+                <a href="{{ route('documents.download', $consultationRequest->document) }}" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">
+                    <i class="fas fa-download"></i> {{ __('Télécharger le document') }}
+                </a>
+                @endif
+            </div>
+            @endif
+
             <div class="flex justify-between mt-4">
                 @if(auth()->user()->user_types_id == 1)
                     <a href="{{ route('consultation_requests.edit', $consultationRequest->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{{ __('Edit') }}</a>

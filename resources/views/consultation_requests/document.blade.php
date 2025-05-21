@@ -43,6 +43,38 @@
                     <h3 class="text-lg font-semibold mb-2">{{ __('Description :') }}</h3>
                     <div class="border border-gray-300 p-3 bg-gray-50">{!! $consultationRequest->description !!}</div>
                 </div>
+
+                @if($consultationRequest->document)
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">{{ __('Document de la bibliothèque associé :') }}</h3>
+                    <div class="border border-gray-300 p-3 bg-gray-50">
+                        <table class="w-full">
+                            <tr>
+                                <td class="font-semibold w-1/3">{{ __('Titre :') }}</td>
+                                <td>{{ $consultationRequest->document->title }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">{{ __('Type de document :') }}</td>
+                                <td>{{ $consultationRequest->document->documentType->name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">{{ __('Date :') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($consultationRequest->document->date)->format('d/m/Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold">{{ __('Description :') }}</td>
+                                <td>{{ $consultationRequest->document->description }}</td>
+                            </tr>
+                            @if($consultationRequest->document->material_condition)
+                            <tr>
+                                <td class="font-semibold">{{ __('État matériel :') }}</td>
+                                <td>{{ $consultationRequest->document->material_condition }}</td>
+                            </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+                @endif
             </div>
 
             <!-- Pied de page -->

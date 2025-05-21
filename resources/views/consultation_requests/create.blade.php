@@ -28,6 +28,16 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group mb-4">
+                <label for="document_id" class="block text-gray-700">{{ __('Document de la bibliothèque') }}</label>
+                <select name="document_id" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="document_id">
+                    <option value="">{{ __('Sélectionner un document (optionnel)') }}</option>
+                    @foreach($documents as $document)
+                        <option value="{{ $document->id }}">{{ $document->title }} ({{ $document->documentType->name }})</option>
+                    @endforeach
+                </select>
+                <p class="text-xs text-gray-500 mt-1">{{ __('Si le document que vous cherchez est déjà dans notre bibliothèque, vous pouvez le spécifier ici.') }}</p>
+            </div>
             {{--            <div class="form-group mb-4">--}}
             {{--                <label for="category_id" class="block text-gray-700">{{ __('Category') }}</label>--}}
             {{--                <select name="category_id" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="category_id">--}}

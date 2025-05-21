@@ -1,32 +1,29 @@
 @extends('layouts.app')
 <style>
-    .card-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-        transition: all 0.3s ease;
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.05);
     }
-    .priority-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+    .status-badge {
+        display: inline-block;
+        padding: 0.25em 0.6em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
     }
+    .status-pending { background-color: #ffc107; color: #212529; }
+    .status-comit { background-color: #007bff; color: white; }
+    .status-finished { background-color: #28a745; color: white; }
+    .status-rejected { background-color: #dc3545; color: white; }
+    .priority-low { background-color: #17a2b8; color: white; }
+    .priority-medium { background-color: #ffc107; color: #212529; }
+    .priority-high { background-color: #007bff; color: white; }
+    .document-linked { color: #28a745; }
 </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const cards = document.querySelectorAll('.card-hover');
-        cards.forEach(card => {
-            card.addEventListener('mouseover', function() {
-                this.style.transform = 'translateY(-5px)';
-                this.style.boxShadow = '0 0.5rem 1rem rgba(0, 0, 0, 0.15)';
-            });
-            card.addEventListener('mouseout', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '';
-            });
-        });
-    });
-</script>
 @section('content')
     <div class="container py-5">
         <header class="text-center mb-5">
@@ -59,40 +56,84 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            @foreach($consultationRequests as $request)
-                <div class="col">
-                    <div class="card h-100 shadow-sm card-hover">
-                        <div class="card-header bg-{{ $request->status == 'pending' ? 'warning' : ($request->status == 'comit' ? 'primary' : ($request->status == 'finished' ? 'success' : ($request->status == 'rejected' ? 'danger' : 'secondary'))) }} text-white">
-                            <i class="bi bi-circle-fill me-2"></i>{{ __(ucfirst($request->status)) }}
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $request->name }}</h5>
-                            <p class="card-text">{!! $request->description !!}</p>
-                            <span class=" text-white badge bg-{{ $request->priority->name == 'low' ? 'info' : ($request->priority->name == 'medium' ? 'warning' : 'primary') }} priority-badge">
-                            {{ $request->priority->name }}
-                        </span>
-                        </div>
-                        <div class="card-footer bg-transparent border-top-0 text-end">
-                            <a href="{{ route('consultation_requests.show', $request->id) }}" class="btn btn-outline-primary btn-sm me-2">
-                                <i class="bi bi-eye"></i> {{ __('View') }}
-                            </a>
-                            @if($request->created_at->diffInMinutes(now()) <= 30)
-                                <a href="{{ route('consultation_requests.edit', $request->id) }}" class="btn btn-outline-secondary btn-sm me-2">
-                                    <i class="bi bi-pencil"></i> {{ __('Edit') }}
-                                </a>
-                                <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('{{ __('Are you sure you want to delete this request?') }}')">
-                                        <i class="bi bi-trash"></i> {{ __('Delete') }}
-                                    </button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>{{ __('ID') }}</th>
+                                <th>{{ __('Status') }}</th>
+                                <th>{{ __('Date de début') }}</th>
+                                <th>{{ __('Date de fin') }}</th>
+                                <th>{{ __('Description') }}</th>
+                                <th>{{ __('Priority') }}</th>
+                                <th>{{ __('Document') }}</th>
+                                <th class="text-center">{{ __('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($consultationRequests as $request)
+                                <tr>
+                                    <td>{{ $request->id }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ $request->status }}">
+                                            {{ __(ucfirst($request->status)) }}
+                                        </span>
+                                    </td>
+                                    <td>{{ $request->date_start }}</td>
+                                    <td>{{ $request->date_end }}</td>
+                                    <td>
+                                        <div style="max-height: 50px; overflow: hidden; text-overflow: ellipsis;">
+                                            {!! Str::limit(strip_tags($request->description), 100) !!}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge priority-{{ $request->priority->name }}">
+                                            {{ $request->priority->name }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($request->document_id)
+                                            <i class="bi bi-file-earmark-text document-linked"></i>
+                                            <span class="small">{{ Str::limit($request->document->title ?? 'Document', 20) }}</span>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ route('consultation_requests.show', $request->id) }}" class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            @if($request->created_at->diffInMinutes(now()) <= 30)
+                                                <a href="{{ route('consultation_requests.edit', $request->id) }}" class="btn btn-outline-secondary btn-sm">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form action="{{ route('consultation_requests.destroy', $request->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('{{ __('Are you sure you want to delete this request?') }}')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="8" class="text-center py-4">{{ __('No consultation requests found.') }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            @endforeach
+                
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $consultationRequests->links() }}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
