@@ -104,7 +104,7 @@
                 @yield('header')
             @else
                 @isset($header)
-                    {{ $header }}
+                    {{-- {{ $header }} --}}
                 @else
                     <h2 class="font-semibold text-xl vintage-header leading-tight">
                         {{ config('app.name', 'Laravel') }}
