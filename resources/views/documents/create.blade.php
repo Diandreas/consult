@@ -14,10 +14,30 @@
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                             <!-- Référence -->
                             <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Référence') }}</label>
+                                <label for="reference" class="block text-sm font-medium text-gray-700">{{ __('Référence') }}</label>
+                                <input type="text" name="reference" id="reference" value="{{ old('reference') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('reference')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Titre -->
+                            <div>
+                                <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Titre') }}</label>
                                 <input type="text" name="title" id="title" value="{{ old('title') }}" required
                                     class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 @error('title')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Intitulé/analyse -->
+                            <div>
+                                <label for="title_analysis" class="block text-sm font-medium text-gray-700">{{ __('Intitulé/analyse') }}</label>
+                                <input type="text" name="title_analysis" id="title_analysis" value="{{ old('title_analysis') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('title_analysis')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -49,12 +69,52 @@
                                 @enderror
                             </div>
 
+                            <!-- Typologie documentaire -->
+                            <div>
+                                <label for="document_typology" class="block text-sm font-medium text-gray-700">{{ __('Typologie documentaire') }}</label>
+                                <input type="text" name="document_typology" id="document_typology" value="{{ old('document_typology') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('document_typology')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <!-- État matériel -->
                             <div>
                                 <label for="material_condition" class="block text-sm font-medium text-gray-700">{{ __('État matériel') }}</label>
                                 <input type="text" name="material_condition" id="material_condition" value="{{ old('material_condition') }}"
                                     class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 @error('material_condition')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Importance matérielle -->
+                            <div>
+                                <label for="material_importance" class="block text-sm font-medium text-gray-700">{{ __('Importance matérielle') }}</label>
+                                <input type="text" name="material_importance" id="material_importance" value="{{ old('material_importance') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('material_importance')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Action administrative -->
+                            <div>
+                                <label for="administrative_action" class="block text-sm font-medium text-gray-700">{{ __('Action administrative') }}</label>
+                                <input type="text" name="administrative_action" id="administrative_action" value="{{ old('administrative_action') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('administrative_action')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Thématique -->
+                            <div>
+                                <label for="theme" class="block text-sm font-medium text-gray-700">{{ __('Thématique') }}</label>
+                                <input type="text" name="theme" id="theme" value="{{ old('theme') }}"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                @error('theme')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -76,6 +136,16 @@
                                 <textarea name="description" id="description" rows="4" required
                                     class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('description') }}</textarea>
                                 @error('description')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <!-- Présentation du contenu -->
+                            <div class="col-span-2">
+                                <label for="content_presentation" class="block text-sm font-medium text-gray-700">{{ __('Présentation du contenu') }}</label>
+                                <textarea name="content_presentation" id="content_presentation" rows="4"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('content_presentation') }}</textarea>
+                                @error('content_presentation')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>

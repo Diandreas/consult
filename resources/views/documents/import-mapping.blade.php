@@ -38,8 +38,33 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="title_column">{{ __('Colonne du Référence') }} <span class="text-danger">*</span></label>
+                                    <label for="reference_column">{{ __('Colonne de la Référence') }}</label>
+                                    <select name="reference_column" id="reference_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="title_column">{{ __('Colonne du Titre') }} <span class="text-danger">*</span></label>
                                     <select name="title_column" id="title_column" class="form-control" required>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="title_analysis_column">{{ __('Colonne de l\'Intitulé/analyse') }}</label>
+                                    <select name="title_analysis_column" id="title_analysis_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
                                         @foreach($header as $index => $column)
                                         <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
                                         @endforeach
@@ -71,8 +96,33 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="document_typology_column">{{ __('Colonne de la Typologie documentaire') }}</label>
+                                    <select name="document_typology_column" id="document_typology_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="description_column">{{ __('Colonne de la Description') }} <span class="text-danger">*</span></label>
                                     <select name="description_column" id="description_column" class="form-control" required>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="content_presentation_column">{{ __('Colonne de la Présentation du contenu') }}</label>
+                                    <select name="content_presentation_column" id="content_presentation_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
                                         @foreach($header as $index => $column)
                                         <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
                                         @endforeach
@@ -86,6 +136,42 @@
                                 <div class="form-group">
                                     <label for="material_condition_column">{{ __('Colonne de l\'État Matériel') }}</label>
                                     <select name="material_condition_column" id="material_condition_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="material_importance_column">{{ __('Colonne de l\'Importance matérielle') }}</label>
+                                    <select name="material_importance_column" id="material_importance_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="administrative_action_column">{{ __('Colonne de l\'Action administrative') }}</label>
+                                    <select name="administrative_action_column" id="administrative_action_column" class="form-control">
+                                        <option value="">{{ __('-- Non applicable --') }}</option>
+                                        @foreach($header as $index => $column)
+                                        <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="theme_column">{{ __('Colonne de la Thématique') }}</label>
+                                    <select name="theme_column" id="theme_column" class="form-control">
                                         <option value="">{{ __('-- Non applicable --') }}</option>
                                         @foreach($header as $index => $column)
                                         <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>

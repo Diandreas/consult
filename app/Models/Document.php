@@ -16,11 +16,18 @@ class Document extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'reference',
         'title',
+        'title_analysis',
         'date',
         'document_type_id',
         'description',
+        'content_presentation',
         'material_condition',
+        'material_importance',
+        'administrative_action',
+        'theme',
+        'document_typology',
         'file_path',
     ];
 

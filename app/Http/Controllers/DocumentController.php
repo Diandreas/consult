@@ -38,11 +38,18 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'reference' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
+            'title_analysis' => 'nullable|string|max:255',
             'date' => 'required|date',
             'document_type_id' => 'required|exists:document_types,id',
             'description' => 'required|string',
+            'content_presentation' => 'nullable|string',
             'material_condition' => 'nullable|string|max:255',
+            'material_importance' => 'nullable|string|max:255',
+            'administrative_action' => 'nullable|string|max:255',
+            'theme' => 'nullable|string|max:255',
+            'document_typology' => 'nullable|string|max:255',
             'file' => 'nullable|file|max:10240', // 10MB max
         ]);
 
@@ -80,11 +87,18 @@ class DocumentController extends Controller
     public function update(Request $request, Document $document)
     {
         $validated = $request->validate([
+            'reference' => 'nullable|string|max:255',
             'title' => 'required|string|max:255',
+            'title_analysis' => 'nullable|string|max:255',
             'date' => 'required|date',
             'document_type_id' => 'required|exists:document_types,id',
             'description' => 'required|string',
+            'content_presentation' => 'nullable|string',
             'material_condition' => 'nullable|string|max:255',
+            'material_importance' => 'nullable|string|max:255',
+            'administrative_action' => 'nullable|string|max:255',
+            'theme' => 'nullable|string|max:255',
+            'document_typology' => 'nullable|string|max:255',
             'file' => 'nullable|file|max:10240', // 10MB max
         ]);
 
@@ -345,11 +359,18 @@ class DocumentController extends Controller
     public function importDocuments(Request $request)
     {
         $request->validate([
+            'reference_column' => 'nullable|integer',
             'title_column' => 'required|integer',
+            'title_analysis_column' => 'nullable|integer',
             'date_column' => 'required|integer',
             'document_type_column' => 'required|integer',
+            'document_typology_column' => 'nullable|integer',
             'description_column' => 'required|integer',
+            'content_presentation_column' => 'nullable|integer',
             'material_condition_column' => 'nullable|integer',
+            'material_importance_column' => 'nullable|integer',
+            'administrative_action_column' => 'nullable|integer',
+            'theme_column' => 'nullable|integer',
         ]);
 
         // Get data from session
@@ -359,25 +380,53 @@ class DocumentController extends Controller
         
         foreach ($data as $row) {
             // Check if row has enough columns
-            if (count($row) <= max([
+            $maxColumn = max(array_filter([
+                $request->reference_column,
                 $request->title_column,
+                $request->title_analysis_column,
                 $request->date_column,
                 $request->document_type_column,
+                $request->document_typology_column,
                 $request->description_column,
-                $request->material_condition_column ? $request->material_condition_column : 0
-            ])) {
+                $request->content_presentation_column,
+                $request->material_condition_column,
+                $request->material_importance_column,
+                $request->administrative_action_column,
+                $request->theme_column
+            ]));
+            
+            if (count($row) <= $maxColumn) {
                 continue; // Skip invalid rows
             }
             
             // S'assurer que les valeurs sont des chaînes
+            $reference = $request->reference_column !== null && isset($row[$request->reference_column]) ? (string)$row[$request->reference_column] : null;
             $title = isset($row[$request->title_column]) ? (string)$row[$request->title_column] : '';
+            $titleAnalysis = $request->title_analysis_column !== null && isset($row[$request->title_analysis_column]) ? (string)$row[$request->title_analysis_column] : null;
             $dateValue = isset($row[$request->date_column]) ? (string)$row[$request->date_column] : '';
             $documentTypeValue = isset($row[$request->document_type_column]) ? (string)$row[$request->document_type_column] : '';
+            $documentTypology = $request->document_typology_column !== null && isset($row[$request->document_typology_column]) ? (string)$row[$request->document_typology_column] : null;
             $description = isset($row[$request->description_column]) ? (string)$row[$request->description_column] : '';
+            $contentPresentation = $request->content_presentation_column !== null && isset($row[$request->content_presentation_column]) ? (string)$row[$request->content_presentation_column] : null;
             
             $materialCondition = null;
-            if ($request->material_condition_column && isset($row[$request->material_condition_column])) {
+            if ($request->material_condition_column !== null && isset($row[$request->material_condition_column])) {
                 $materialCondition = (string)$row[$request->material_condition_column];
+            }
+            
+            $materialImportance = null;
+            if ($request->material_importance_column !== null && isset($row[$request->material_importance_column])) {
+                $materialImportance = (string)$row[$request->material_importance_column];
+            }
+            
+            $administrativeAction = null;
+            if ($request->administrative_action_column !== null && isset($row[$request->administrative_action_column])) {
+                $administrativeAction = (string)$row[$request->administrative_action_column];
+            }
+            
+            $theme = null;
+            if ($request->theme_column !== null && isset($row[$request->theme_column])) {
+                $theme = (string)$row[$request->theme_column];
             }
             
             // Vérifier que les valeurs requises ne sont pas vides
@@ -407,11 +456,18 @@ class DocumentController extends Controller
             }
             
             Document::create([
+                'reference' => $reference,
                 'title' => $title,
+                'title_analysis' => $titleAnalysis,
                 'date' => $date,
                 'document_type_id' => $documentType->id,
+                'document_typology' => $documentTypology,
                 'description' => $description,
+                'content_presentation' => $contentPresentation,
                 'material_condition' => $materialCondition,
+                'material_importance' => $materialImportance,
+                'administrative_action' => $administrativeAction,
+                'theme' => $theme,
             ]);
             
             $importCount++;

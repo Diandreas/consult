@@ -37,8 +37,10 @@
                                 <thead class="bg-gray-100">
                                     <tr>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Référence') }}</th>
-                                        <th class="py-2 px-4 border-b text-left">{{ __('Date') }}</th>
+                                        <th class="py-2 px-4 border-b text-left">{{ __('Titre') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Type') }}</th>
+                                        <th class="py-2 px-4 border-b text-left">{{ __('Date') }}</th>
+                                        <th class="py-2 px-4 border-b text-left">{{ __('Thématique') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Fichier') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Actions') }}</th>
                                     </tr>
@@ -46,9 +48,11 @@
                                 <tbody>
                                     @foreach($documents as $document)
                                         <tr>
-                                            <td class="py-2 px-4 border-b">{{ $document->title }}</td>
-                                            <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}</td>
+                                            <td class="py-2 px-4 border-b">{{ $document->reference ?? $document->title }}</td>
+                                            <td class="py-2 px-4 border-b">{{ $document->title_analysis ?? $document->title }}</td>
                                             <td class="py-2 px-4 border-b">{{ $document->documentType->name }}</td>
+                                            <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}</td>
+                                            <td class="py-2 px-4 border-b">{{ $document->theme ?? '-' }}</td>
                                             <td class="py-2 px-4 border-b">
                                                 @if($document->file_path)
                                                     <a href="{{ route('documents.download', $document) }}" class="text-blue-500 hover:underline">

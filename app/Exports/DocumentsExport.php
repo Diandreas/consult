@@ -24,11 +24,18 @@ class DocumentsExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'ID',
+            'Référence',
             'Titre',
+            'Intitulé/analyse',
             'Date',
             'Type de document',
+            'Typologie documentaire',
             'Description',
+            'Présentation du contenu',
             'État matériel',
+            'Importance matérielle',
+            'Action administrative',
+            'Thématique',
             'Fichier disponible',
             'Créé le'
         ];
@@ -42,11 +49,18 @@ class DocumentsExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $document->id,
+            $document->reference,
             $document->title,
+            $document->title_analysis,
             $document->date,
             $document->documentType->name,
+            $document->document_typology,
             $document->description,
+            $document->content_presentation,
             $document->material_condition,
+            $document->material_importance,
+            $document->administrative_action,
+            $document->theme,
             $document->file_path ? 'Oui' : 'Non',
             $document->created_at->format('d/m/Y H:i:s')
         ];
