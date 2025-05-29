@@ -36,7 +36,7 @@
                             <table class="min-w-full bg-white">
                                 <thead class="bg-gray-100">
                                     <tr>
-                                        <th class="py-2 px-4 border-b text-left">{{ __('Titre') }}</th>
+                                        <th class="py-2 px-4 border-b text-left">{{ __('Référence') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Date') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Type') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Fichier') }}</th>
