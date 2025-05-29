@@ -380,54 +380,74 @@ class DocumentController extends Controller
         
         foreach ($data as $row) {
             // Check if row has enough columns
-            $maxColumn = max(array_filter([
-                $request->reference_column,
-                $request->title_column,
-                $request->title_analysis_column,
-                $request->date_column,
-                $request->document_type_column,
-                $request->document_typology_column,
-                $request->description_column,
-                $request->content_presentation_column,
-                $request->material_condition_column,
-                $request->material_importance_column,
-                $request->administrative_action_column,
-                $request->theme_column
-            ]));
+            $columnsToCheck = [];
+            if ($request->reference_column !== null) $columnsToCheck[] = $request->reference_column;
+            if ($request->title_column !== null) $columnsToCheck[] = $request->title_column;
+            if ($request->title_analysis_column !== null) $columnsToCheck[] = $request->title_analysis_column;
+            if ($request->date_column !== null) $columnsToCheck[] = $request->date_column;
+            if ($request->document_type_column !== null) $columnsToCheck[] = $request->document_type_column;
+            if ($request->document_typology_column !== null) $columnsToCheck[] = $request->document_typology_column;
+            if ($request->description_column !== null) $columnsToCheck[] = $request->description_column;
+            if ($request->content_presentation_column !== null) $columnsToCheck[] = $request->content_presentation_column;
+            if ($request->material_condition_column !== null) $columnsToCheck[] = $request->material_condition_column;
+            if ($request->material_importance_column !== null) $columnsToCheck[] = $request->material_importance_column;
+            if ($request->administrative_action_column !== null) $columnsToCheck[] = $request->administrative_action_column;
+            if ($request->theme_column !== null) $columnsToCheck[] = $request->theme_column;
+            
+            $maxColumn = !empty($columnsToCheck) ? max($columnsToCheck) : 0;
             
             if (count($row) <= $maxColumn) {
                 continue; // Skip invalid rows
             }
             
             // S'assurer que les valeurs sont des chaînes
-            $reference = $request->reference_column !== null && isset($row[$request->reference_column]) ? (string)$row[$request->reference_column] : null;
-            $title = isset($row[$request->title_column]) ? (string)$row[$request->title_column] : '';
-            $titleAnalysis = $request->title_analysis_column !== null && isset($row[$request->title_analysis_column]) ? (string)$row[$request->title_analysis_column] : null;
-            $dateValue = isset($row[$request->date_column]) ? (string)$row[$request->date_column] : '';
-            $documentTypeValue = isset($row[$request->document_type_column]) ? (string)$row[$request->document_type_column] : '';
-            $documentTypology = $request->document_typology_column !== null && isset($row[$request->document_typology_column]) ? (string)$row[$request->document_typology_column] : null;
-            $description = isset($row[$request->description_column]) ? (string)$row[$request->description_column] : '';
-            $contentPresentation = $request->content_presentation_column !== null && isset($row[$request->content_presentation_column]) ? (string)$row[$request->content_presentation_column] : null;
+            $reference = ($request->reference_column !== null && isset($row[$request->reference_column])) 
+                ? $this->ensureString($row[$request->reference_column]) 
+                : '';
+                
+            $title = isset($row[$request->title_column]) 
+                ? $this->ensureString($row[$request->title_column]) 
+                : '';
+                
+            $titleAnalysis = ($request->title_analysis_column !== null && isset($row[$request->title_analysis_column])) 
+                ? $this->ensureString($row[$request->title_analysis_column]) 
+                : '';
+                
+            $dateValue = isset($row[$request->date_column]) 
+                ? $this->ensureString($row[$request->date_column]) 
+                : '';
+                
+            $documentTypeValue = isset($row[$request->document_type_column]) 
+                ? $this->ensureString($row[$request->document_type_column]) 
+                : '';
+                
+            $documentTypology = ($request->document_typology_column !== null && isset($row[$request->document_typology_column])) 
+                ? $this->ensureString($row[$request->document_typology_column]) 
+                : '';
+                
+            $description = isset($row[$request->description_column]) 
+                ? $this->ensureString($row[$request->description_column]) 
+                : '';
+                
+            $contentPresentation = ($request->content_presentation_column !== null && isset($row[$request->content_presentation_column])) 
+                ? $this->ensureString($row[$request->content_presentation_column]) 
+                : '';
             
-            $materialCondition = null;
-            if ($request->material_condition_column !== null && isset($row[$request->material_condition_column])) {
-                $materialCondition = (string)$row[$request->material_condition_column];
-            }
+            $materialCondition = ($request->material_condition_column !== null && isset($row[$request->material_condition_column])) 
+                ? $this->ensureString($row[$request->material_condition_column]) 
+                : '';
             
-            $materialImportance = null;
-            if ($request->material_importance_column !== null && isset($row[$request->material_importance_column])) {
-                $materialImportance = (string)$row[$request->material_importance_column];
-            }
+            $materialImportance = ($request->material_importance_column !== null && isset($row[$request->material_importance_column])) 
+                ? $this->ensureString($row[$request->material_importance_column]) 
+                : '';
             
-            $administrativeAction = null;
-            if ($request->administrative_action_column !== null && isset($row[$request->administrative_action_column])) {
-                $administrativeAction = (string)$row[$request->administrative_action_column];
-            }
+            $administrativeAction = ($request->administrative_action_column !== null && isset($row[$request->administrative_action_column])) 
+                ? $this->ensureString($row[$request->administrative_action_column]) 
+                : '';
             
-            $theme = null;
-            if ($request->theme_column !== null && isset($row[$request->theme_column])) {
-                $theme = (string)$row[$request->theme_column];
-            }
+            $theme = ($request->theme_column !== null && isset($row[$request->theme_column])) 
+                ? $this->ensureString($row[$request->theme_column]) 
+                : '';
             
             // Vérifier que les valeurs requises ne sont pas vides
             if (empty($title) || empty($documentTypeValue) || empty($description)) {
@@ -456,18 +476,18 @@ class DocumentController extends Controller
             }
             
             Document::create([
-                'reference' => $reference,
+                'reference' => $reference ?: null,
                 'title' => $title,
-                'title_analysis' => $titleAnalysis,
+                'title_analysis' => $titleAnalysis ?: null,
                 'date' => $date,
                 'document_type_id' => $documentType->id,
-                'document_typology' => $documentTypology,
+                'document_typology' => $documentTypology ?: null,
                 'description' => $description,
-                'content_presentation' => $contentPresentation,
-                'material_condition' => $materialCondition,
-                'material_importance' => $materialImportance,
-                'administrative_action' => $administrativeAction,
-                'theme' => $theme,
+                'content_presentation' => $contentPresentation ?: null,
+                'material_condition' => $materialCondition ?: null,
+                'material_importance' => $materialImportance ?: null,
+                'administrative_action' => $administrativeAction ?: null,
+                'theme' => $theme ?: null,
             ]);
             
             $importCount++;
