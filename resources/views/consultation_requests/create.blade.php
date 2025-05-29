@@ -137,7 +137,7 @@
             <div class="overflow-auto flex-grow p-4">
                 <div id="documentResults" class="grid grid-cols-1 gap-4">
                     <div id="resultsPlaceholder" class="text-center py-8 text-gray-500">
-                        <p>Saisissez au moins 3 caractères pour lancer la recherche</p>
+                        <p>Chargement des documents...</p>
                     </div>
                     
                     <div id="resultsList" class="hidden">
@@ -255,9 +255,7 @@
             
             // Fetch documents from server
             function fetchDocuments() {
-                // Ici vous devriez faire un appel AJAX à votre backend pour récupérer les documents
-                // Pour l'exemple, nous allons simuler cela avec un délai
-                
+                // Afficher l'indicateur de chargement
                 loadingIndicator.classList.remove('hidden');
                 resultsPlaceholder.classList.add('hidden');
                 resultsList.classList.add('hidden');
@@ -271,8 +269,16 @@
                     // Après avoir récupéré les documents
                     loadingIndicator.classList.add('hidden');
                     
-                    // Appliquer les filtres initiaux et afficher les résultats
-                    applyFiltersAndSearch();
+                    // Afficher tous les documents sans filtrage initial
+                    filteredDocuments = [...allDocuments];
+                    
+                    // Mise à jour de la pagination
+                    totalPages = Math.max(1, Math.ceil(filteredDocuments.length / documentsPerPage));
+                    currentPage = 1;
+                    updatePagination();
+                    
+                    // Afficher les résultats
+                    displayResults();
                 }, 500);
             }
             
@@ -284,7 +290,7 @@
                 
                 // Filtrer les documents
                 filteredDocuments = allDocuments.filter(doc => {
-                    const matchesSearch = searchTerm.length < 3 || 
+                    const matchesSearch = !searchTerm || 
                                         doc.title.toLowerCase().includes(searchTerm) || 
                                         (doc.reference && doc.reference.toLowerCase().includes(searchTerm)) ||
                                         (doc.theme && doc.theme.toLowerCase().includes(searchTerm));
