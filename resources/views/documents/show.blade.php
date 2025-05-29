@@ -47,10 +47,6 @@
                                     <p class="text-lg">{{ $document->title_analysis }}</p>
                                 </div>
                                 @endif
-                                <div class="mb-4">
-                                    <p class="text-sm font-medium text-gray-500">{{ __('Type de document') }}</p>
-                                    <p class="text-lg">{{ $document->documentType->name }}</p>
-                                </div>
                                 @if($document->document_typology)
                                 <div class="mb-4">
                                     <p class="text-sm font-medium text-gray-500">{{ __('Typologie documentaire') }}</p>
@@ -61,12 +57,6 @@
                                     <p class="text-sm font-medium text-gray-500">{{ __('Date') }}</p>
                                     <p class="text-lg">{{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}</p>
                                 </div>
-                                @if($document->material_condition)
-                                <div class="mb-4">
-                                    <p class="text-sm font-medium text-gray-500">{{ __('État matériel') }}</p>
-                                    <p class="text-lg">{{ $document->material_condition }}</p>
-                                </div>
-                                @endif
                                 @if($document->material_importance)
                                 <div class="mb-4">
                                     <p class="text-sm font-medium text-gray-500">{{ __('Importance matérielle') }}</p>
@@ -106,11 +96,6 @@
                         </div>
                         
                         <div>
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('Description') }}</h3>
-                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
-                                {!! $document->description !!}
-                            </div>
-                            
                             @if($document->content_presentation)
                             <h3 class="text-lg font-medium text-gray-900 mb-2">{{ __('Présentation du contenu') }}</h3>
                             <div class="bg-gray-50 p-4 rounded-lg">

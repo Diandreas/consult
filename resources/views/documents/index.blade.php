@@ -38,7 +38,6 @@
                                     <tr>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Référence') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Titre') }}</th>
-                                        <th class="py-2 px-4 border-b text-left">{{ __('Type') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Date') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Thématique') }}</th>
                                         <th class="py-2 px-4 border-b text-left">{{ __('Fichier') }}</th>
@@ -50,7 +49,6 @@
                                         <tr>
                                             <td class="py-2 px-4 border-b">{{ $document->reference ?? $document->title }}</td>
                                             <td class="py-2 px-4 border-b">{{ $document->title_analysis ?? $document->title }}</td>
-                                            <td class="py-2 px-4 border-b">{{ $document->documentType->name }}</td>
                                             <td class="py-2 px-4 border-b">{{ \Carbon\Carbon::parse($document->date)->format('d/m/Y') }}</td>
                                             <td class="py-2 px-4 border-b">{{ $document->theme ?? '-' }}</td>
                                             <td class="py-2 px-4 border-b">

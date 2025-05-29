@@ -52,39 +52,12 @@
                                 @enderror
                             </div>
 
-                            <!-- Type de document -->
-                            <div>
-                                <label for="document_type_id" class="block text-sm font-medium text-gray-700">{{ __('Type de document') }}</label>
-                                <select name="document_type_id" id="document_type_id" required
-                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <option value="">{{ __('Sélectionnez un type') }}</option>
-                                    @foreach($documentTypes as $type)
-                                        <option value="{{ $type->id }}" {{ old('document_type_id') == $type->id ? 'selected' : '' }}>
-                                            {{ $type->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('document_type_id')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
                             <!-- Typologie documentaire -->
                             <div>
                                 <label for="document_typology" class="block text-sm font-medium text-gray-700">{{ __('Typologie documentaire') }}</label>
                                 <input type="text" name="document_typology" id="document_typology" value="{{ old('document_typology') }}"
                                     class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 @error('document_typology')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <!-- État matériel -->
-                            <div>
-                                <label for="material_condition" class="block text-sm font-medium text-gray-700">{{ __('État matériel') }}</label>
-                                <input type="text" name="material_condition" id="material_condition" value="{{ old('material_condition') }}"
-                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('material_condition')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
@@ -130,16 +103,6 @@
                                 @enderror
                             </div>
 
-                            <!-- Description -->
-                            <div class="col-span-2">
-                                <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
-                                <textarea name="description" id="description" rows="4" required
-                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                @enderror
-                            </div>
-
                             <!-- Présentation du contenu -->
                             <div class="col-span-2">
                                 <label for="content_presentation" class="block text-sm font-medium text-gray-700">{{ __('Présentation du contenu') }}</label>
@@ -149,6 +112,12 @@
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                            
+                            <!-- Champ caché pour Type de document -->
+                            <input type="hidden" name="document_type_id" value="1">
+                            
+                            <!-- Champ caché pour Description -->
+                            <input type="hidden" name="description" value="N/A">
                         </div>
 
                         <div class="flex justify-end mt-6 space-x-3">
