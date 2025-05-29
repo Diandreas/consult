@@ -14,7 +14,7 @@
             @if($consultationRequest->document)
             <div class="mt-4 p-4 bg-blue-50 rounded-lg">
                 <h3 class="text-lg font-semibold text-blue-700">{{ __('Document de la bibliothèque associé') }}</h3>
-                <p class="mb-1"><strong>{{ __('Titre') }}:</strong> {{ $consultationRequest->document->title }}</p>
+                <p class="mb-1"><strong>{{ __('Référence') }}:</strong> {{ $consultationRequest->document->title }}</p>
                 <p class="mb-1"><strong>{{ __('Type') }}:</strong> {{ $consultationRequest->document->documentType->name }}</p>
                 <p class="mb-1"><strong>{{ __('Date') }}:</strong> {{ \Carbon\Carbon::parse($consultationRequest->document->date)->format('d/m/Y') }}</p>
                 <p class="mb-3"><strong>{{ __('Description') }}:</strong> {{ $consultationRequest->document->description }}</p>

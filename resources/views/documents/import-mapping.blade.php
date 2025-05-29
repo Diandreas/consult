@@ -38,7 +38,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="title_column">{{ __('Colonne du Titre') }} <span class="text-danger">*</span></label>
+                                    <label for="title_column">{{ __('Colonne du Référence') }} <span class="text-danger">*</span></label>
                                     <select name="title_column" id="title_column" class="form-control" required>
                                         @foreach($header as $index => $column)
                                         <option value="{{ $index }}">{{ $column }} ({{ $index }})</option>

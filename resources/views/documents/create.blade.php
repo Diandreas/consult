@@ -12,9 +12,9 @@
                     <form action="{{ route('documents.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                            <!-- Titre -->
+                            <!-- Référence -->
                             <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Titre') }}</label>
+                                <label for="title" class="block text-sm font-medium text-gray-700">{{ __('Référence') }}</label>
                                 <input type="text" name="title" id="title" value="{{ old('title') }}" required
                                     class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 @error('title')

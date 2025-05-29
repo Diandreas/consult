@@ -50,7 +50,7 @@
                     <div class="border border-gray-300 p-3 bg-gray-50">
                         <table class="w-full">
                             <tr>
-                                <td class="font-semibold w-1/3">{{ __('Titre :') }}</td>
+                                <td class="font-semibold w-1/3">{{ __('Référence :') }}</td>
                                 <td>{{ $consultationRequest->document->title }}</td>
                             </tr>
                             <tr>

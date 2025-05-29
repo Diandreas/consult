@@ -63,7 +63,7 @@
                                 <thead>
                                     <tr>
                                         <th>{{ __('ID') }}</th>
-                                        <th>{{ __('Titre') }}</th>
+                                        <th>{{ __('Référence') }}</th>
                                         <th>{{ __('Date') }}</th>
                                         <th>{{ __('Actions') }}</th>
                                     </tr>
