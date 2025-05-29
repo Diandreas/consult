@@ -39,7 +39,10 @@
                                 </div>
                             </div>
                             
-                            <button type="button" id="openDocumentModal" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                            <button type="button" id="openDocumentModal" class="bg-indigo-700 hover:bg-indigo-800 text-white font-semibold px-5 py-3 rounded-md shadow-md flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
                                 {{ __('Rechercher un document') }}
                             </button>
                         </div>
@@ -108,7 +111,7 @@
                 <div class="flex flex-col md:flex-row gap-2">
                     <div class="flex w-full">
                         <input type="text" id="documentSearch" class="w-full border border-gray-300 rounded-l px-4 py-2" placeholder="{{ __('Rechercher par titre, référence, thématique...') }}">
-                        <button id="searchButton" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r">
+                        <button id="searchButton" class="bg-indigo-700 hover:bg-indigo-800 text-white px-4 py-2 rounded-r shadow-md">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -140,7 +143,7 @@
                         <p>Chargement des documents...</p>
                     </div>
                     
-                    <div id="resultsList" class="hidden">
+                    <div id="resultsList" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Les résultats seront chargés ici dynamiquement -->
                     </div>
                     
@@ -210,7 +213,7 @@
             // Variables de pagination
             let currentPage = 1;
             let totalPages = 1;
-            let documentsPerPage = 10;
+            let documentsPerPage = 6;
             let allDocuments = [];
             let filteredDocuments = [];
             
@@ -359,7 +362,7 @@
             // Créer un élément de document pour l'affichage
             function createDocumentElement(doc) {
                 const div = document.createElement('div');
-                div.className = 'document-item p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer';
+                div.className = 'document-item p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer bg-white shadow-sm hover:shadow-md transition-shadow';
                 div.setAttribute('data-id', doc.id);
                 div.setAttribute('data-title', doc.title);
                 div.setAttribute('data-reference', doc.reference || '');
@@ -371,10 +374,10 @@
                 
                 // Créer le contenu de l'élément
                 div.innerHTML = `
-                    <h4 class="font-medium">${doc.title}</h4>
-                    ${doc.reference ? `<p class="text-sm text-gray-500">Référence: ${doc.reference}</p>` : ''}
-                    <p class="text-sm text-gray-500">Date: ${formattedDate}</p>
-                    ${doc.theme ? `<p class="text-sm text-gray-500">Thématique: ${doc.theme}</p>` : ''}
+                    <h4 class="font-medium text-indigo-800">${doc.title}</h4>
+                    ${doc.reference ? `<p class="text-sm text-gray-600 mt-1"><span class="font-semibold">Référence:</span> ${doc.reference}</p>` : ''}
+                    <p class="text-sm text-gray-600 mt-1"><span class="font-semibold">Date:</span> ${formattedDate}</p>
+                    ${doc.theme ? `<p class="text-sm text-gray-600 mt-1"><span class="font-semibold">Thématique:</span> ${doc.theme}</p>` : ''}
                 `;
                 
                 // Ajouter l'event listener pour la sélection
