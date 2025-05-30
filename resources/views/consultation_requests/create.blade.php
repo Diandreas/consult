@@ -53,7 +53,7 @@
                 <div id="noDocumentForm">
                     <div class="form-group mb-4">
                         <label for="description" class="block text-gray-700 font-semibold mb-2">{{ __('Description de votre demande') }} <span class="text-red-500">*</span></label>
-                        <textarea name="description" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="description" rows="4" required></textarea>
+                        <textarea name="description" class="form-control w-full border border-gray-300 rounded px-4 py-2" id="description" rows="4"></textarea>
                         <p class="text-sm text-gray-500 mt-1">{{ __('Décrivez précisément les informations que vous recherchez.') }}</p>
                     </div>
                     
@@ -231,6 +231,8 @@
                     // Réinitialiser la sélection
                     selectedDocument.classList.add('hidden');
                     selectedDocumentId.value = '';
+                    // Réinitialiser la description
+                    document.getElementById('description').setAttribute('required', 'required');
                 }
             });
             
@@ -396,6 +398,27 @@
                 docReference.textContent = reference ? 'Référence: ' + reference : '';
                 docDate.textContent = 'Date: ' + date;
                 
+                // Préparer les informations du document pour la description
+                const docInfo = `Document demandé: ${title}\n` + 
+                                `${reference ? 'Référence: ' + reference + '\n' : ''}` +
+                                `Date: ${date}`;
+                
+                // Créer un champ hidden pour la description
+                const descriptionField = document.getElementById('description');
+                descriptionField.value = docInfo;
+                descriptionField.removeAttribute('required');
+                
+                // Créer un champ caché qui contient la description
+                let hiddenDesc = document.getElementById('hidden_description');
+                if (!hiddenDesc) {
+                    hiddenDesc = document.createElement('input');
+                    hiddenDesc.type = 'hidden';
+                    hiddenDesc.name = 'description';
+                    hiddenDesc.id = 'hidden_description';
+                    document.getElementById('consultationForm').appendChild(hiddenDesc);
+                }
+                hiddenDesc.value = docInfo;
+                
                 // Show selection and hide other form fields
                 selectedDocument.classList.remove('hidden');
                 noDocumentForm.classList.add('hidden');
@@ -442,6 +465,17 @@
                 selectedDocument.classList.add('hidden');
                 selectedDocumentId.value = '';
                 noDocumentForm.classList.remove('hidden');
+                
+                // Réinitialiser la description
+                const descriptionField = document.getElementById('description');
+                descriptionField.value = '';
+                descriptionField.setAttribute('required', 'required');
+                
+                // Supprimer le champ caché si présent
+                const hiddenDesc = document.getElementById('hidden_description');
+                if (hiddenDesc) {
+                    hiddenDesc.remove();
+                }
             });
         });
     </script>
